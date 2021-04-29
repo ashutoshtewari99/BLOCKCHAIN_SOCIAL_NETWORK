@@ -1,8 +1,9 @@
 pragma solidity ^0.5.0;
 
-contract SocialNetwork{
-string public name;
-constructor() public {
-    name = "ashutosh";
-}
+contract SocialNetwork {
+    string public name;
+
+    constructor() public {
+        name = "Ashutosh Social Network";
+    }
 }
