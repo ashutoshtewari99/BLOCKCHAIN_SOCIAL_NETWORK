@@ -23,7 +23,10 @@ contract SocialNetwork {
     }
 
     function createPost(string memory _content) public{
-        postCount++;    //Increment Post Count
+        //Require valid content
+        require(bytes(_content).length > 0);
+        //Increment Post Count
+        postCount++;    
         //_post = Post(postCount, _content, 0, msg.sender);
         //Create post
         posts[postCount] = Post(postCount, _content, 0, msg.sender);

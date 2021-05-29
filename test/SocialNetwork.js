@@ -1,4 +1,4 @@
-const { assert } = require('chai');
+const { assert, should } = require('chai');
 
 const SocialNetwork = artifacts.require('./SocialNetwork.sol');
 
@@ -33,10 +33,19 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
     let result, postCount
 
     it('creates posts', async ()=> {
-      result = await socialNetwork.createPost('This is my first code', {from: author })
+      result = await socialNetwork.createPost('This is my first post', {from: author })
       postCount= await socialNetwork.postCount()
+
       //Success
       assert.equal(postCount, 1)
+      const event = result.logs[0].args
+      assert.equal(event.id.toNumber(), postCount.toNumber(), 'ID is correct')
+      assert.equal(event.content, 'This is my first post', 'Content is correct')
+      assert.equal(event.tipAmount , '0', 'Tip amount is correct')
+      assert.equal(event.author, author, 'Author is correct')
+
+      //Failure
+      await socialNetwork.createPost('', {from: author }).should.be.rejected;
     })
 
     // it('lists posts', async ()=> {
