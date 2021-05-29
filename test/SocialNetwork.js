@@ -6,7 +6,8 @@ require('chai')
   .use(require('chai-as-promised'))
   .should()
                         //v callback function
-contract('SocialNetwork', (accounts) => {
+// contract('SocialNetwork', (accounts) => {
+contract('SocialNetwork', ([deployer, author, tipper]) => {
   let socialNetwork
 
   before(async ()=>{
@@ -25,17 +26,32 @@ contract('SocialNetwork', (accounts) => {
     it('has a name', async ()=>{
       const name = await socialNetwork.name()
       assert.equal(name, 'Ashutosh Social Network')
-    })
+    }) 
   })
-  describe('posts', async ()=> {
-      
-    it('creates posts', async ()=> {
 
+  describe('posts', async ()=> {
+    let result, postCount
+
+    it('creates posts', async ()=> {
+      result = await socialNetwork.createPost('This is my first code', {from: author })
+      postCount= await socialNetwork.postCount()
+      //Success
+      assert.equal(postCount, 1)
     })
-    it('lists posts', async ()=> {
+
+    // it('lists posts', async ()=> {
       
-    })
-    it('allow users to tip posts', async ()=> {
+    // })
+    // it('allow users to tip posts', async ()=> {
       
-    })
+    // })
+  })
+
+
+
+
+
+
+
+
 })
